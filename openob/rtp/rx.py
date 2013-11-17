@@ -62,6 +62,10 @@ class RTPReceiver:
     udpsrc_caps = gst.caps_from_string(caps)
     self.udpsrc_rtpin.set_property('caps', udpsrc_caps)
     self.udpsrc_rtpin.set_property('timeout', 5000000)
+    
+    # HACK Faldrian: Höre auf dem IPv6-Socket!
+    self.udpsrc_rtpin.set_property('multicast-group','::');
+    
     # Where our RTCP control messages come in
     self.udpsrc_rtcpin = gst.element_factory_make('udpsrc')
     self.udpsrc_rtcpin.set_property('port', base_port+1)
